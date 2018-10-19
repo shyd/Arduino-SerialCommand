@@ -45,7 +45,9 @@
 
 class SerialCommand {
   public:
-    SerialCommand(Stream &print);      // Constructor receives Stream object to write on
+    SerialCommand(Stream &print, Stream &debugPrint);      // Constructor with custom Stream object
+    SerialCommand(Stream &print);      // Constructor with custom Stream object
+    SerialCommand();      // Constructor with default Stream object
     void addCommand(const char *command, void(*function)());  // Add a command to the processing dictionary.
     void setDefaultHandler(void (*function)(const char *));   // A handler to call when no valid command received.
 
@@ -55,6 +57,7 @@ class SerialCommand {
 
   private:
     Stream* printer;    // object to read and print on
+    Stream* debugPrinter; // object to debug print on
     // Command/handler dictionary
     struct SerialCommandCallback {
       char command[SERIALCOMMAND_MAXCOMMANDLENGTH + 1];
