@@ -2,11 +2,12 @@
  * SerialCommand - A Wiring/Arduino library to tokenize and parse commands
  * received over a serial port.
  * 
- * Copyright (C) 2012 Stefan Rado
+ * Copyright (C) 2018 Mingyu Kim <mingyu@mingyu.co.kr>
+ * Copyright (C) 2012 Stefan Rado <https://github.com/kroimon/Arduino-SerialCommand>
  * Copyright (C) 2011 Steven Cogswell <steven.cogswell@gmail.com>
  *                    http://husks.wordpress.com
  * 
- * Version 20120522
+ * Version 20181019
  * 
  * This library is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -44,7 +45,7 @@
 
 class SerialCommand {
   public:
-    SerialCommand();      // Constructor
+    SerialCommand(Stream &print);      // Constructor receives Stream object to write on
     void addCommand(const char *command, void(*function)());  // Add a command to the processing dictionary.
     void setDefaultHandler(void (*function)(const char *));   // A handler to call when no valid command received.
 
@@ -53,6 +54,7 @@ class SerialCommand {
     char *next();         // Returns pointer to next token found in command buffer (for getting arguments to commands).
 
   private:
+    Stream* printer;    // object to read and print on
     // Command/handler dictionary
     struct SerialCommandCallback {
       char command[SERIALCOMMAND_MAXCOMMANDLENGTH + 1];
