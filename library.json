@@ -8,5 +8,7 @@
     "url": "https://github.com/shyd/Arduino-SerialCommand.git"
   },
   "frameworks": "arduino",
-  "platforms": "atmelavr"
+  "platforms": "atmelavr",
+  "version": "0.1.0",
+  "author": "shyd"
 }
