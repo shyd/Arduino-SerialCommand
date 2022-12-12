@@ -2,12 +2,13 @@
  * SerialCommand - A Wiring/Arduino library to tokenize and parse commands
  * received over a serial port.
  *
+ * Copyright (C) 2022 Dennis Schuett <https://github.com/shyd/Arduino-SerialCommand>
  * Copyright (C) 2018 Mingyu Kim <mingyu@mingyu.co.kr>
  * Copyright (C) 2012 Stefan Rado <https://github.com/kroimon/Arduino-SerialCommand>
  * Copyright (C) 2011 Steven Cogswell <steven.cogswell@gmail.com>
  *                    http://husks.wordpress.com
  * 
- * Version 20181019
+ * Version 20221212
  * 
  * This library is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -27,11 +28,11 @@
 /**
  * Constructor makes sure some things are set.
  */
-SerialCommand::SerialCommand(Stream &print, Stream &debugPrint)
+SerialCommand::SerialCommand(Stream &print, Stream &debugPrint, char terminator)
   : commandList(NULL),
     commandCount(0),
     defaultHandler(NULL),
-    term('\n'),           // default terminator for commands, newline character
+    term(terminator),           // default terminator for commands, newline character
     last(NULL)
 {
   debugPrinter = &debugPrint; //operate on the address of custom debug serial
@@ -40,11 +41,11 @@ SerialCommand::SerialCommand(Stream &print, Stream &debugPrint)
   clearBuffer();
 }
 
-SerialCommand::SerialCommand(Stream &print)
+SerialCommand::SerialCommand(Stream &print, char terminator)
   : commandList(NULL),
     commandCount(0),
     defaultHandler(NULL),
-    term('\n'),           // default terminator for commands, newline character
+    term(terminator),           // default terminator for commands, newline character
     last(NULL)
 {
   printer = &print; //operate on the address of custom Serial
@@ -53,11 +54,11 @@ SerialCommand::SerialCommand(Stream &print)
   clearBuffer();
 }
 
-SerialCommand::SerialCommand()
+SerialCommand::SerialCommand(char terminator)
   : commandList(NULL),
     commandCount(0),
     defaultHandler(NULL),
-    term('\n'),           // default terminator for commands, newline character
+    term(terminator),           // default terminator for commands, newline character
     last(NULL)
 {
   debugPrinter = &Serial; //operate on the address of default Serial

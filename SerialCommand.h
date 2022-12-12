@@ -35,9 +35,13 @@
 #include <string.h>
 
 // Size of the input buffer in bytes (maximum length of one command plus arguments)
-#define SERIALCOMMAND_BUFFER 32
+#ifndef SERIALCOMMAND_BUFFER
+    #define SERIALCOMMAND_BUFFER 32
+#endif
 // Maximum length of a command excluding the terminating null
-#define SERIALCOMMAND_MAXCOMMANDLENGTH 8
+#ifndef SERIALCOMMAND_MAXCOMMANDLENGTH
+    #define SERIALCOMMAND_MAXCOMMANDLENGTH 8
+#endif
 
 // Uncomment the next line to run the library in debug mode (verbose messages)
 //#define SERIALCOMMAND_DEBUG
@@ -45,9 +49,9 @@
 
 class SerialCommand {
   public:
-    SerialCommand(Stream &print, Stream &debugPrint);      // Constructor with custom Stream object
-    SerialCommand(Stream &print);      // Constructor with custom Stream object
-    SerialCommand();      // Constructor with default Stream object
+    SerialCommand(Stream &print, Stream &debugPrint, char terminator = '\n');      // Constructor with custom Stream object
+    SerialCommand(Stream &print, char terminator = '\n');      // Constructor with custom Stream object
+    SerialCommand(char terminator = '\n');      // Constructor with default Stream object
     void addCommand(const char *command, void(*function)());  // Add a command to the processing dictionary.
     void setDefaultHandler(void (*function)(const char *));   // A handler to call when no valid command received.
 
